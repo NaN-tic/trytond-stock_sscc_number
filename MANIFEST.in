@@ -1,0 +1,8 @@
+include COPYRIGHT
+include LICENSE
+include README.rst
+include tryton.cfg
+recursive-include view *.xml
+recursive-include locale *.po
+recursive-include tests *.rst
+

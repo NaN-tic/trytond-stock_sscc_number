@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook" position="inside">
+        <page string="SSCC" id="sscc" col="4">
+            <label name="sscc_company_prefix"/>
+            <field name="sscc_company_prefix"/>
+            <label name="sscc_extension_digit"/>
+            <field name="sscc_extension_digit"/>
+        </page>
+    </xpath>
+</data>
+
