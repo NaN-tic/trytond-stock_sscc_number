@@ -24,7 +24,7 @@ class Configuration(metaclass=PoolMeta):
     __name__ = 'stock.configuration'
 
     sscc_sequence = fields.MultiValue(fields.Many2One(
-            'ir.sequence.strict', "SSCC Sequence", required=True,
+            'ir.sequence', "SSCC Sequence", required=True,
             domain=[
                 ('company', 'in', [
                         Eval('context', {}).get('company', -1), None]),
@@ -117,7 +117,7 @@ class ConfigurationSequence(metaclass=PoolMeta):
     __name__ = 'stock.configuration.sequence'
 
     sscc_sequence = fields.Many2One(
-        'ir.sequence.strict', "SSCC Sequence", required=True,
+        'ir.sequence', "SSCC Sequence", required=True,
         domain=[
             ('company', 'in', [Eval('company', -1), None]),
             ('sequence_type', '=', Id('stock_sscc_number', 'sequence_type_sscc')),

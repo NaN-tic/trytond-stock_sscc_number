@@ -17,7 +17,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="group" ref="stock.group_stock_admin"/>
         </record>
 
-        <record model="ir.sequence.strict" id="sequence_sscc">
+        <record model="ir.sequence" id="sequence_sscc">
             <field name="name">SSCC</field>
             <field name="sequence_type" ref="sequence_type_sscc"/>
             <field name="padding" eval="8"/>
