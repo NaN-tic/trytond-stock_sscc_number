@@ -1,0 +1,100 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:company.company,sscc_company_prefix:"
+msgid "SSCC Company Prefix"
+msgstr "Prefix d'empresa SSCC"
+
+msgctxt "field:company.company,sscc_extension_digit:"
+msgid "SSCC Extension Digit"
+msgstr "Dígit d'extensió SSCC"
+
+msgctxt "field:stock.configuration,sscc_sequence:"
+msgid "SSCC Sequence"
+msgstr "Seqüència SSCC"
+
+msgctxt "field:stock.configuration.sequence,sscc_sequence:"
+msgid "SSCC Sequence"
+msgstr "Seqüència SSCC"
+
+msgctxt "help:company.company,sscc_company_prefix:"
+msgid "GS1 company prefix used to generate SSCC logistic identifiers."
+msgstr "Prefix d'empresa GS1 utilitzat per generar identificadors logístics SSCC."
+
+msgctxt "help:company.company,sscc_extension_digit:"
+msgid "Extension digit used as the first SSCC digit."
+msgstr "Dígit d'extensió utilitzat com a primer dígit de l'SSCC."
+
+msgctxt "help:stock.configuration,sscc_sequence:"
+msgid "Sequence used to generate the serial reference of SSCC numbers."
+msgstr "Seqüència utilitzada per generar la referència de sèrie dels números SSCC."
+
+msgctxt "help:stock.configuration.sequence,sscc_sequence:"
+msgid "Sequence used to generate the serial reference of SSCC numbers."
+msgstr "Seqüència utilitzada per generar la referència de sèrie dels números SSCC."
+
+msgctxt "model:ir.message,text:msg_invalid_company_prefix"
+msgid "Company \"%(company)s\" has an invalid SSCC company prefix \"%(prefix)s\". It must contain only digits."
+msgstr "L'empresa \"%(company)s\" té un prefix d'empresa SSCC invàlid \"%(prefix)s\". Només pot contenir dígits."
+
+msgctxt "model:ir.message,text:msg_invalid_company_prefix_length"
+msgid "Company \"%(company)s\" has an SSCC company prefix \"%(prefix)s\" that is too long."
+msgstr "L'empresa \"%(company)s\" té un prefix d'empresa SSCC \"%(prefix)s\" massa llarg."
+
+msgctxt "model:ir.message,text:msg_invalid_extension_digit"
+msgid "Company \"%(company)s\" has an invalid SSCC extension digit \"%(digit)s\". It must be a single digit."
+msgstr "L'empresa \"%(company)s\" té un dígit d'extensió SSCC invàlid \"%(digit)s\". Ha de ser un únic dígit."
+
+msgctxt "model:ir.message,text:msg_invalid_serial_reference"
+msgid "The SSCC serial reference \"%(serial)s\" must contain only digits."
+msgstr "La referència de sèrie SSCC \"%(serial)s\" només pot contenir dígits."
+
+msgctxt "model:ir.message,text:msg_invalid_sscc_check_digit"
+msgid "The SSCC \"%(sscc)s\" has an invalid check digit. Expected %(expected)s."
+msgstr "L'SSCC \"%(sscc)s\" té un dígit de control invàlid. S'esperava %(expected)s."
+
+msgctxt "model:ir.message,text:msg_invalid_sscc_format"
+msgid "The SSCC \"%(sscc)s\" must contain exactly 18 digits."
+msgstr "L'SSCC \"%(sscc)s\" ha de contenir exactament 18 dígits."
+
+msgctxt "model:ir.message,text:msg_missing_company"
+msgid "The package must belong to a company before an SSCC can be generated."
+msgstr "Cal disposar d'una empresa abans de poder generar un SSCC."
+
+msgctxt "model:ir.message,text:msg_missing_company_prefix"
+msgid "Company \"%(company)s\" has no SSCC company prefix configured."
+msgstr "L'empresa \"%(company)s\" no té configurat cap prefix d'empresa SSCC."
+
+msgctxt "model:ir.message,text:msg_missing_sscc_sequence"
+msgid "Company \"%(company)s\" has no SSCC sequence configured."
+msgstr "L'empresa \"%(company)s\" no té configurada cap seqüència SSCC."
+
+msgctxt "model:ir.message,text:msg_serial_reference_too_long"
+msgid "The SSCC serial reference \"%(serial)s\" exceeds the allowed length of %(length)s digits."
+msgstr "La referència de sèrie SSCC \"%(serial)s\" supera la longitud permesa de %(length)s dígits."
+
+msgctxt "model:ir.message,text:msg_sscc_unique"
+msgid "The SSCC must be unique."
+msgstr "L'SSCC ha de ser únic."
+
+msgctxt "model:ir.sequence,name:sequence_sscc"
+msgid "SSCC"
+msgstr "SSCC"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_sscc"
+msgid "SSCC"
+msgstr "SSCC"
+
+msgctxt "view:company.company:"
+msgid "SSCC"
+msgstr "SSCC"
+
+msgctxt "view:stock.configuration:"
+msgid "SSCC"
+msgstr "SSCC"
+
+msgctxt "view:stock.configuration:"
+msgid "Sequence"
+msgstr "Seqüència"
+
