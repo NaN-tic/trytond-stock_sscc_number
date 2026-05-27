@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<tryton>
+    <data depends="production">
+        <record model="ir.ui.view" id="production_view_form">
+            <field name="model">production</field>
+            <field name="inherit" ref="production.production_view_form"/>
+            <field name="name">production_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="generate_pallet_output_start_view_form">
+            <field name="model">stock_sscc_number.production.generate_pallet_output.start</field>
+            <field name="type">form</field>
+            <field name="name">generate_pallet_output_start_form</field>
+        </record>
+
+        <record model="ir.model.button" id="production_generate_pallet_output_button">
+            <field name="name">generate_pallet_output</field>
+            <field name="string">Generate Pallet Output</field>
+            <field name="model">production</field>
+        </record>
+
+        <record model="ir.action.wizard" id="wizard_generate_pallet_output">
+            <field name="name">Generate Pallet Output</field>
+            <field name="wiz_name">stock_sscc_number.production.generate_pallet_output</field>
+        </record>
+        <record model="ir.action.keyword" id="wizard_generate_pallet_output_keyword">
+            <field name="keyword">form_action</field>
+            <field name="model">production,-1</field>
+            <field name="action" ref="wizard_generate_pallet_output"/>
+        </record>
+    </data>
+</tryton>
