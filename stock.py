@@ -2,7 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 
 from trytond.i18n import gettext
-from trytond.model import fields
+from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, Id
 
@@ -133,3 +133,68 @@ class ConfigurationSequence(metaclass=PoolMeta):
             return ModelData.get_id('stock_sscc_number', 'sequence_sscc')
         except KeyError:
             return None
+
+
+class PalletSerial(ModelSQL, ModelView):
+    'Pallet Serial'
+    __name__ = 'stock.pallet.serial'
+
+    number = fields.Char('Number', required=True)
+    product = fields.Many2One('product.product', 'Product', required=True)
+    lot = fields.Many2One('stock.lot', 'Lot', required=True)
+    origin = fields.Reference('Origin', selection='get_origin', required=True)
+    move = fields.Many2One('stock.move', 'Move')
+
+    @classmethod
+    def get_origin(cls):
+        return [(None, ''),
+            ('stock.inventory.line', 'Inventory Line'),
+            ('stock.inventory', 'Inventory'), ('stock.move', 'Move'),
+            ('stock.shipment.in', 'Shipment In'),
+            ('stock.shipment.internal', 'Shipment Internal'),
+            ('stock.shipment.out.return', 'Shipment Out Return'),
+            ('stock.shipment.out', 'Shipment Out')]
+
+
+class Move(metaclass=PoolMeta):
+    __name__ = 'stock.move'
+
+    pallet_serials_move = fields.One2Many('stock.pallet.serial', 'move',
+        'Matriculas')
+    pallet_numbers = fields.Function(fields.Char('Matriculas'),
+        'get_pallet_numbers', searcher='search_pallet_numbers')
+
+    @classmethod
+    def get_pallet_numbers(cls, moves, name):
+        pool = Pool()
+        Pallet = pool.get('stock.pallet.serial')
+
+        result = {m.id: '' for m in moves}
+        if not moves:
+            return result
+
+        pallets = Pallet.search([
+            ('move', 'in', [m.id for m in moves]),
+            ], order=[('number', 'ASC')])
+        grouped = {}
+        for pallet in pallets:
+            grouped.setdefault(pallet.move.id, []).append(pallet.number)
+
+        for move in moves:
+            result[move.id] = ', '.join(grouped.get(move.id, []))
+        return result
+
+    @classmethod
+    def search_pallet_numbers(cls, name, clause):
+        _, operator, value = clause
+        Pallet = Pool().get('stock.pallet.serial')
+        pallet = Pallet.__table__()
+
+        Operator = fields.SQL_OPERATORS[operator]
+        where = Operator(pallet.number, value)
+        query = pallet.select(pallet.move, where=where & (pallet.move != None))
+
+        negative = {'!=', 'not like', 'not ilike', 'not in'}
+        if operator in negative:
+            return [('id', 'not in', query)]
+        return [('id', 'in', query)]
