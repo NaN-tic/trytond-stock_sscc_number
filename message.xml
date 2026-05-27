@@ -36,6 +36,17 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.message" id="msg_sscc_unique">
             <field name="text">The SSCC must be unique.</field>
         </record>
+        <record model="ir.message" id="msg_no_pallet_pending_output">
+            <field name="text">Production "%(production)s" has no pending output move to generate a pallet output.</field>
+        </record>
+        <record model="ir.message" id="msg_no_pallet_package">
+            <field name="text">Move "%(move)s" has no package quantity or package configured.</field>
+        </record>
+        <record model="ir.message" id="msg_no_boxes_per_pallet">
+            <field name="text">Move "%(move)s" has no boxes per pallet configured on its package.</field>
+        </record>
+        <record model="ir.message" id="msg_no_pallet_lot">
+            <field name="text">Move "%(move)s" must have a lot to generate a pallet SSCC.</field>
+        </record>
     </data>
 </tryton>
-

@@ -18,6 +18,42 @@ msgctxt "field:stock.configuration.sequence,sscc_sequence:"
 msgid "SSCC Sequence"
 msgstr "Secuencia SSCC"
 
+msgctxt "field:stock.move,pallet_numbers:"
+msgid "Matriculas"
+msgstr "Matriculas"
+
+msgctxt "field:stock.move,pallet_serials_move:"
+msgid "Matriculas"
+msgstr "Matriculas"
+
+msgctxt "field:stock_sscc_number.production.generate_pallet_output.start,lot:"
+msgid "Lot"
+msgstr "Lote"
+
+msgctxt "field:stock_sscc_number.production.generate_pallet_output.start,product:"
+msgid "Product"
+msgstr "Producto"
+
+msgctxt "field:stock.pallet.serial,lot:"
+msgid "Lot"
+msgstr "Lote"
+
+msgctxt "field:stock.pallet.serial,move:"
+msgid "Move"
+msgstr "Movimientos"
+
+msgctxt "field:stock.pallet.serial,number:"
+msgid "Number"
+msgstr "Número"
+
+msgctxt "field:stock.pallet.serial,origin:"
+msgid "Origin"
+msgstr "Origen"
+
+msgctxt "field:stock.pallet.serial,product:"
+msgid "Product"
+msgstr "Producto"
+
 msgctxt "help:company.company,sscc_company_prefix:"
 msgid "GS1 company prefix used to generate SSCC logistic identifiers."
 msgstr "Prefijo de empresa GS1 utilizado para generar identificadores logísticos SSCC."
@@ -77,6 +113,38 @@ msgstr "La referencia de serie SSCC \"%(serial)s\" supera la longitud permitida 
 msgctxt "model:ir.message,text:msg_sscc_unique"
 msgid "The SSCC must be unique."
 msgstr "El SSCC debe ser único."
+
+msgctxt "model:ir.message,text:msg_no_boxes_per_pallet"
+msgid "Move \"%(move)s\" has no boxes per pallet configured on its package."
+msgstr "El movimiento \"%(move)s\" no tiene cajas por palet configuradas en su paquete."
+
+msgctxt "model:ir.message,text:msg_no_pallet_package"
+msgid "Move \"%(move)s\" has no package quantity or package configured."
+msgstr "El movimiento \"%(move)s\" no tiene cantidad de paquetes ni paquete configurado."
+
+msgctxt "model:ir.message,text:msg_no_pallet_lot"
+msgid "Move \"%(move)s\" must have a lot to generate a pallet SSCC."
+msgstr "El movimiento \"%(move)s\" debe tener un lote para generar un SSCC de palet."
+
+msgctxt "model:ir.message,text:msg_no_pallet_pending_output"
+msgid "Production \"%(production)s\" has no pending output move to generate a pallet output."
+msgstr "La producción \"%(production)s\" no tiene ningún movimiento de salida pendiente para generar una salida de palet."
+
+msgctxt "model:ir.model.button,string:production_generate_pallet_output_button"
+msgid "Generate Pallet Output"
+msgstr "Generar salida de palet"
+
+msgctxt "model:ir.action,name:wizard_generate_pallet_output"
+msgid "Generate Pallet Output"
+msgstr "Generar salida de palet"
+
+msgctxt "model:stock_sscc_number.production.generate_pallet_output.start,name:"
+msgid "Generate Pallet Output"
+msgstr "Generar salida de palet"
+
+msgctxt "model:stock.pallet.serial,name:"
+msgid "Pallet Serial"
+msgstr "Serie de palet"
 
 msgctxt "model:ir.sequence,name:sequence_sscc"
 msgid "SSCC"
