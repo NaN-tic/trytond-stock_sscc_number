@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@id='move']/field[@name='effective_date']" position="after">
+        <label name="pallet_numbers"/>
+        <field name="pallet_numbers" colspan="3" xexpand="1"/>
+    </xpath>
+    <xpath expr="/form/notebook/page[@id='move']" position="inside">
+        <separator string="Matriculas" id="pallet_serials" colspan="4"/>
+        <field name="pallet_serials_move" colspan="4"/>
+    </xpath>
+</data>
