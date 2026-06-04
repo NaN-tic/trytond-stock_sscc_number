@@ -54,6 +54,28 @@ class StockSSCCNumberTestCase(ModuleTestCase):
             Configuration.validate_sscc_number(sscc)
 
     @with_transaction()
+    def test_get_next_sscc_uses_default_sequence_and_trims_padding(self):
+        pool = Pool()
+        Company = pool.get('company.company')
+        Configuration = pool.get('stock.configuration')
+
+        company = create_company()
+        with set_company(company):
+            Company.write([company], {
+                    'sscc_company_prefix': '184370081725',
+                    'sscc_extension_digit': '0',
+                    })
+            preview = Configuration.get_next_sscc_preview(company)
+            sscc = Configuration.get_next_sscc(company)
+
+            self.assertEqual(len(preview), 18)
+            self.assertEqual(len(sscc), 18)
+            self.assertTrue(preview.startswith('0184370081725'))
+            self.assertTrue(sscc.startswith('0184370081725'))
+            Configuration.validate_sscc_number(preview)
+            Configuration.validate_sscc_number(sscc)
+
+    @with_transaction()
     def test_create_pallet_serial(self):
         pool = Pool()
         Company = pool.get('company.company')

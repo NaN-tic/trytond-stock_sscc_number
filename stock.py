@@ -46,6 +46,24 @@ class Configuration(metaclass=PoolMeta):
         return cls.multivalue_model('sscc_sequence').default_sscc_sequence()
 
     @classmethod
+    def get_sscc_sequence(cls, company):
+        pool = Pool()
+        ModelData = pool.get('ir.model.data')
+        Sequence = pool.get('ir.sequence')
+
+        config = cls(1)
+        sequence = config.get_multivalue(
+            'sscc_sequence', company=company.id)
+        if sequence:
+            return sequence
+        try:
+            sequence_id = ModelData.get_id(
+                'stock_sscc_number', 'sequence_sscc')
+        except KeyError:
+            return None
+        return Sequence(sequence_id)
+
+    @classmethod
     def validate_sscc_number(cls, number):
         if len(number) != 18 or not number.isdigit():
             raise SSCCValidationError(
@@ -89,6 +107,8 @@ class Configuration(metaclass=PoolMeta):
             raise SSCCValidationError(
                 gettext('stock_sscc_number.msg_invalid_serial_reference',
                     serial=serial_reference))
+        serial_reference = cls.normalize_sscc_serial_reference(
+            company, serial_reference)
         if len(serial_reference) > serial_length:
             raise SSCCValidationError(
                 gettext('stock_sscc_number.msg_serial_reference_too_long',
@@ -103,14 +123,40 @@ class Configuration(metaclass=PoolMeta):
         return base_number + _check_digit(base_number)
 
     @classmethod
+    def normalize_sscc_serial_reference(cls, company, serial_reference):
+        serial_reference = str(serial_reference or '')
+        prefix = getattr(company, 'sscc_company_prefix', '') or ''
+        serial_length = 16 - len(prefix)
+        if (serial_length > 0
+                and len(serial_reference) > serial_length
+                and serial_reference.isdigit()):
+            stripped = serial_reference.lstrip('0') or '0'
+            if len(stripped) <= serial_length:
+                return stripped
+        return serial_reference
+
+    @classmethod
     def get_next_sscc(cls, company):
-        config = cls(1)
-        sequence = config.get_multivalue('sscc_sequence', company=company.id)
+        sequence = cls.get_sscc_sequence(company)
         if not sequence:
             raise SSCCError(
                 gettext('stock_sscc_number.msg_missing_sscc_sequence',
                     company=company.rec_name))
-        return cls.build_sscc(company, sequence.get())
+        serial_reference = cls.normalize_sscc_serial_reference(
+            company, sequence.get())
+        return cls.build_sscc(company, serial_reference)
+
+    @classmethod
+    def get_next_sscc_preview(cls, company):
+        sequence = cls.get_sscc_sequence(company)
+        if not sequence:
+            return ''
+        serial_reference = sequence.on_change_with_preview(None)
+        if not serial_reference:
+            return ''
+        serial_reference = cls.normalize_sscc_serial_reference(
+            company, serial_reference)
+        return cls.build_sscc(company, serial_reference)
 
 
 class ConfigurationSequence(metaclass=PoolMeta):
