@@ -5,6 +5,7 @@ from trytond.i18n import gettext
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, Id
+from trytond.transaction import Transaction
 
 from .exceptions import SSCCError, SSCCValidationError
 
@@ -209,6 +210,9 @@ class Move(metaclass=PoolMeta):
         'Matriculas')
     pallet_numbers = fields.Function(fields.Char('Matriculas'),
         'get_pallet_numbers', searcher='search_pallet_numbers')
+    next_pallet_number = fields.Function(fields.Char('Next Pallet Number'),
+        'get_next_pallet_number')
+
 
     @classmethod
     def get_pallet_numbers(cls, moves, name):
@@ -219,8 +223,12 @@ class Move(metaclass=PoolMeta):
         if not moves:
             return result
 
+        move_ids = [m.id for m in moves if m.id is not None]
+        if not move_ids:
+            return result
+
         pallets = Pallet.search([
-            ('move', 'in', [m.id for m in moves]),
+            ('move', 'in', move_ids),
             ], order=[('number', 'ASC')])
         grouped = {}
         for pallet in pallets:
@@ -228,6 +236,30 @@ class Move(metaclass=PoolMeta):
 
         for move in moves:
             result[move.id] = ', '.join(grouped.get(move.id, []))
+        return result
+
+    @classmethod
+    def get_next_pallet_number(cls, moves, name):
+        pool = Pool()
+        Configuration = pool.get('stock.configuration')
+        Company = pool.get('company.company')
+        result = {m.id: '' for m in moves}
+        if not moves:
+            return result
+
+        for move in moves:
+            if move.pallet_numbers:
+                result[move.id] = move.pallet_numbers.split(', ', 1)[0]
+                continue
+            company = getattr(move, 'company', None)
+            if isinstance(company, int):
+                company = Company(company)
+            if not company:
+                company_id = Transaction().context.get('company')
+                if company_id:
+                    company = Company(company_id)
+            if company:
+                result[move.id] = Configuration.get_next_sscc_preview(company)
         return result
 
     @classmethod
