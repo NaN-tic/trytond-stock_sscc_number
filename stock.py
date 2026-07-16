@@ -151,13 +151,16 @@ class Configuration(metaclass=PoolMeta):
     def get_next_sscc_preview(cls, company):
         sequence = cls.get_sscc_sequence(company)
         if not sequence:
-            return ''
+            return
         serial_reference = sequence.on_change_with_preview(None)
         if not serial_reference:
-            return ''
+            return
         serial_reference = cls.normalize_sscc_serial_reference(
             company, serial_reference)
-        return cls.build_sscc(company, serial_reference)
+        try:
+            return cls.build_sscc(company, serial_reference)
+        except (SSCCError, SSCCValidationError):
+            return
 
 
 class ConfigurationSequence(metaclass=PoolMeta):
@@ -243,7 +246,7 @@ class Move(metaclass=PoolMeta):
         pool = Pool()
         Configuration = pool.get('stock.configuration')
         Company = pool.get('company.company')
-        result = {m.id: '' for m in moves}
+        result = {m.id: None for m in moves}
         if not moves:
             return result
 
