@@ -29,4 +29,14 @@
             <field name="action" ref="wizard_generate_pallet_output"/>
         </record>
     </data>
+    <data depends="production">
+        <record model="ir.action-res.group" id="generate_pallet_output_group_production">
+            <field name="action" ref="wizard_generate_pallet_output"/>
+            <field name="group" ref="production.group_production"/>
+        </record>
+        <record model="ir.action-res.group" id="generate_pallet_output_group_stock">
+            <field name="action" ref="wizard_generate_pallet_output"/>
+            <field name="group" ref="stock.group_stock"/>
+        </record>
+    </data>
 </tryton>
